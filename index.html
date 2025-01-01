@@ -70,6 +70,7 @@
         <h1>Modals</h1>
         <button onclick="Eitaa.WebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
+        <button onclick="Eitaa.WebApp.requestContact((suc, dat) => {showAlert(dat)});">Get Phone</button>
 
         <h1>Links</h1>
         <ul>
