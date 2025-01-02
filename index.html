@@ -70,7 +70,7 @@
         <h1>Modals</h1>
         <button onclick="Eitaa.WebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
-        <button onclick="Eitaa.WebApp.requestContact((suc, dat) => {Eitaa.WebApp.showAlert(JSON.stringify(dat))});">Get Phone</button>
+        <button onclick="Eitaa.WebApp.requestContact(getContact);">Get Phone</button>
 
         <h1>Links</h1>
         <ul>
@@ -89,6 +89,7 @@
         <button onclick="Eitaa.WebApp.expand();">Expand Webview</button>
         <button onclick="toggleMainButton();">Toggle Main Button</button>
     </main>
+    <div id="data-box"></div>
     <div id="viewport"></div>
     <div id="viewport-params-size"></div>
     <div id="viewport-params-expand"></div>
@@ -96,6 +97,7 @@
     <script>
         // Init TWA
         Eitaa.WebApp.ready();
+        Eitaa.WebApp.disableVerticalSwipes()
 
         // Event occurs whenever theme settings are changed in the user's Eitaa app (including switching to night mode).
         Eitaa.WebApp.onEvent('themeChanged', function() {
@@ -154,6 +156,13 @@
             document.body.setAttribute('style', '--bg-color:' + Eitaa.WebApp.backgroundColor);
         });
 
+        let dataBox = document.getElementById('data-box');
+        dataBox.innerText = JSON.stringify(Eitaa.WebApp.initData) + JSON.stringify(Eitaa.WebApp.initDataUnsafe);
+
+        function getContact(suc, dat) {
+            let dataBox = document.getElementById('data-box');
+            dataBox.innerText = JSON.stringify(data);
+        }
     </script>
 
     <!-- Eruda is console for mobile browsers -->
