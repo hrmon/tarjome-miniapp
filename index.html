@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Eitaa Mini Apps Vanilla JS Sample App</title>
+    <title>Mini Apps Vanilla JS Sample App</title>
     <style>
         body {
             --bg-color: var(--tg-theme-bg-color);
@@ -65,28 +65,28 @@
 <body>
     <main>
         <div align="center">
-            <a href="https://ton.org/"><img width="48" src="./assets/tapps.png" alt="logo of Eitaa web apps"></a>
+            <a href="https://ton.org/"><img width="48" src="./assets/tapps.png" alt="logo of miniappProvider web apps"></a>
         </div>
         <h1>Modals</h1>
-        <button onclick="Eitaa.WebApp.showAlert('Hello World!');">Launch Alert</button>
+        <button onclick="miniappProvider.WebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
-        <button onclick="Eitaa.WebApp.requestContact(getContact);">Get Phone</button>
+        <button onclick="miniappProvider.WebApp.requestContact(getContact);">Get Phone</button>
 
         <h1>Links</h1>
         <ul>
             <li>
-                <a href="javascript:Eitaa.WebApp.openEitaaLink('https://t.me/trendingapps');">Open link within Eitaa</a>
+                <a href="javascript:miniappProvider.WebApp.openEitaaLink('https://t.me/trendingapps');">Open link within Eitaa</a>
             </li>
             <li>
-                <a href="javascript:Eitaa.WebApp.openLink('https://ton.org/');">Open link in external browser</a>
+                <a href="javascript:miniappProvider.WebApp.openLink('https://ton.org/');">Open link in external browser</a>
             </li>
             <li>
-                <a href="javascript:Eitaa.WebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Eitaa webview</a>
+                <a href="javascript:miniappProvider.WebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Eitaa webview</a>
             </li>
         </ul>
 
         <h1>Buttons</h1>
-        <button onclick="Eitaa.WebApp.expand();">Expand Webview</button>
+        <button onclick="miniappProvider.WebApp.expand();">Expand Webview</button>
         <button onclick="toggleMainButton();">Toggle Main Button</button>
     </main>
     <div id="data-box"></div>
@@ -96,26 +96,28 @@
     <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
     <script>
         // Init TWA
-        Eitaa.WebApp.ready();
-        Eitaa.WebApp.disableVerticalSwipes()
+        window.miniappProvider = window.Eitaa;
+
+        miniappProvider.WebApp.ready();
+        miniappProvider.WebApp.disableVerticalSwipes()
 
         // Event occurs whenever theme settings are changed in the user's Eitaa app (including switching to night mode).
-        Eitaa.WebApp.onEvent('themeChanged', function() {
-            document.documentElement.className = Eitaa.WebApp.colorScheme;
+        miniappProvider.WebApp.onEvent('themeChanged', function() {
+            document.documentElement.className = miniappProvider.WebApp.colorScheme;
         });
 
         // Show main button
-        Eitaa.WebApp.MainButton.setParams({
+        miniappProvider.WebApp.MainButton.setParams({
             text: 'Main Button'
         });
-        Eitaa.WebApp.MainButton.onClick(function () {
-            Eitaa.WebApp.showAlert('Main Button was clicked')
+        miniappProvider.WebApp.MainButton.onClick(function () {
+            miniappProvider.WebApp.showAlert('Main Button was clicked')
         });	
-        Eitaa.WebApp.MainButton.show();
+        miniappProvider.WebApp.MainButton.show();
 
         // Function to call showPopup API
         function showPopup() {
-            Eitaa.WebApp.showPopup({
+            miniappProvider.WebApp.showPopup({
                 title: 'Title',
                 message: 'Some message',
                 buttons: [
@@ -124,40 +126,40 @@
                 ]
             }, function(btn) {
                 if (btn === 'link') {
-                    Eitaa.WebApp.openLink('https://ton.org/');
+                    miniappProvider.WebApp.openLink('https://ton.org/');
                 }
             });
         };
 
         // Function to toggle main TWA button
         function toggleMainButton() {
-            if (Eitaa.WebApp.MainButton.isVisible) {
-                Eitaa.WebApp.MainButton.hide();
+            if (miniappProvider.WebApp.MainButton.isVisible) {
+                miniappProvider.WebApp.MainButton.hide();
             } else {
-                Eitaa.WebApp.MainButton.show();
+                miniappProvider.WebApp.MainButton.show();
             }
         };
 
         function setViewportData() {
             var sizeEl = document.getElementById('viewport-params-size');
             sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' + 
-                'height: ' + Eitaa.WebApp.viewportStableHeight;
+                'height: ' + miniappProvider.WebApp.viewportStableHeight;
 
             var expandEl = document.querySelector('#viewport-params-expand');
-            expandEl.innerText = 'Is Expanded: ' + (Eitaa.WebApp.isExpanded ? 'true' : 'false');
+            expandEl.innerText = 'Is Expanded: ' + (miniappProvider.WebApp.isExpanded ? 'true' : 'false');
         }
 
-        Eitaa.WebApp.setHeaderColor('secondary_bg_color');
+        miniappProvider.WebApp.setHeaderColor('secondary_bg_color');
 
         setViewportData();
-        Eitaa.WebApp.onEvent('viewportChanged', setViewportData);
+        miniappProvider.WebApp.onEvent('viewportChanged', setViewportData);
 
-        Eitaa.WebApp.onEvent('themeChanged', function() {
-            document.body.setAttribute('style', '--bg-color:' + Eitaa.WebApp.backgroundColor);
+        miniappProvider.WebApp.onEvent('themeChanged', function() {
+            document.body.setAttribute('style', '--bg-color:' + miniappProvider.WebApp.backgroundColor);
         });
 
         let dataBox = document.getElementById('data-box');
-        dataBox.innerText = JSON.stringify(Eitaa.WebApp.initData) + JSON.stringify(Eitaa.WebApp.initDataUnsafe);
+        dataBox.innerText = JSON.stringify(miniappProvider.WebApp.initData) + JSON.stringify(miniappProvider.WebApp.initDataUnsafe);
 
         function getContact(suc, dat) {
             let dataBox = document.getElementById('data-box');
